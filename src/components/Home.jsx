@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { addToPastes, updatePastes } from '../redux/pasteSlice';
 import { FaSave, FaClipboardList } from 'react-icons/fa';
+import toast from "react-hot-toast";
 
 const Home = () => {
     const [title, setTitle] = useState('');
@@ -23,6 +24,11 @@ const Home = () => {
     }, [pasteId, allPastes]);
 
     const createPaste = () => {
+        if (!title.trim() || !value.trim()) {
+            toast.error("Please enter both title and content.");
+            return;
+        }
+        
         const paste = {
             title,
             content: value,
